@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 /**
  * @description This contains the database connection specification
- * @author Haswanth reddy
+ * @author Haswanth Reddy
  * @since 28-09-2022 9:35 PM IST
  */
 
