@@ -4,7 +4,7 @@ import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import path from 'path';
-import { PORT } from './constants.js';
+import { CLIENT, PORT } from './constants.js';
 // handle extensions with webpack
 
 const __dirname = path.resolve();
@@ -14,7 +14,7 @@ const __dirname = path.resolve();
 const app = express();
 
 app.use(cors({
-	origin: 'http://localhost:3000',
+	origin: CLIENT,
 }));
 app.use(morgan('combined'));
 app.use(express.json());
