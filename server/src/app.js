@@ -6,7 +6,7 @@ import morgan from 'morgan';
 import path from 'path';
 import { CLIENT, PORT } from './constants.js';
 // handle extensions with webpack
-
+// check
 const __dirname = path.resolve();
 
 // routes
