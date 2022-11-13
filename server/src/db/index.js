@@ -5,8 +5,10 @@
  * @since 28-09-2022 9:35 PM IST
  */
 
-import mongoose from 'mongoose';
-import { mongoConnectionString } from '../constants';
+const mongoose = require('mongoose');
+const {
+	mongoConnectionString
+} = require('../constants');
 
 mongoose.connect(mongoConnectionString, (err) => {
 	if (err) {

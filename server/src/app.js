@@ -1,32 +1,65 @@
 /* eslint-disable import/extensions */
 /* eslint-disable no-underscore-dangle */
-import express from 'express';
-import cors from 'cors';
-import morgan from 'morgan';
-import path from 'path';
-import { CLIENT, PORT } from './constants.js';
+const cors = require('cors');
+const path = require('path');
+const morgan = require('morgan');
+const helmet = require('helmet');
+const express = require('express');
+
+const {
+	CLIENT,
+	PORT
+} = require('./constants')
+
 // handle extensions with webpack
-// check
-const __dirname = path.resolve();
+
 
 // routes
 
 const app = express();
-
+app.use(helmet())
 app.use(cors({
 	origin: CLIENT,
 }));
 app.use(morgan('combined'));
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '..', 'public')));
 
-app.get('/', (req, res) => res.send(`<h1>TODO-LIST backend running on ${PORT}</h1>`));
+function checkLoggedIn(req, res, next) {
+	console.log('Current user is:', req.user);
+	const isLoggedIn = req.isAuthenticated() && req.user;
+	if (!isLoggedIn) {
+		return res.status(401).json({
+			error: 'You must log in!',
+		})
+	}
+	next()
+}
+
+app.get('/auth/google', passport.authenticate('google', {
+	scope: ['email'],
+}))
+
+app.get('/auth/google/callback',
+	passport.authenticate('google', {
+		failureRedirect: '/failure',
+		successRedirect: '/',
+		session: true,
+	}))
+
 
 // routes middleware
+
+// passport
+
+// oauth
+
+// cookiesession
+
+// logout
 
 // except for the above routes rest of the all endpoints would hit here
 // app.get('/*', (req, res) => {
 // 	res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
 // });
 
-export default app;
+module.exports = app;

@@ -5,3 +5,4 @@ ssh
 *.zip
 .vscode
 todo
+*.pem
