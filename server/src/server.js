@@ -1,25 +1,29 @@
-import http from 'http';
-import cluster from 'cluster';
-import os from 'os';
-import { PORT } from './constants.js';
-import app from './app.js';
+const os = require('os');
+const path = require('path');
+const https = require('https');
+const cluster = require('cluster');
+const { readFileSync } = require('fs')
+
+const app = require('./app');
+const {
+	PORT
+} = require('./constants');
+
 
 cluster.schedulingPolicy = cluster.SCHED_RR; // for windows only
-
-// passport
-
-// oauth
-
-// cookiesession
-
-// logout
 
 if (cluster.isPrimary) {
 	for (let cores = 0; cores < os.cpus().length; cores++) {
 		cluster.fork();
 	}
+	console.log("master")
 } else {
-	http.createServer(app).listen(PORT, () => {
-		console.log(`server is running on port ${PORT}`);
-	});
+	https.createServer(
+		{
+			cert: readFileSync(path.join(__dirname, '..', 'cert.pem')),
+			key: readFileSync(path.join(__dirname, '..', 'key.pem')),
+		},
+		app).listen(PORT, () => {
+			console.log(`server is running on port ${PORT}`);
+		});
 }

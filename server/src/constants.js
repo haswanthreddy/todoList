@@ -1,8 +1,6 @@
-import * as env from 'dotenv';
+require('dotenv').config()
 
-env.config();
-
-export const {
+const {
 	ATLAS_USER,
 	ATLAS_PASSWORD,
 	ATLAS_CLUSTER,
@@ -11,4 +9,14 @@ export const {
 	CLIENT
 } = process.env;
 
-export const mongoConnectionString = `mongodb+srv://${ATLAS_USER}:${ATLAS_PASSWORD}@${ATLAS_CLUSTER}/${MONGO_DB}?retryWrites=true`;
+const mongoConnectionString = `mongodb+srv://${ATLAS_USER}:${ATLAS_PASSWORD}@${ATLAS_CLUSTER}/${MONGO_DB}?retryWrites=true`;
+
+module.exports = {
+	ATLAS_USER,
+	ATLAS_PASSWORD,
+	ATLAS_CLUSTER,
+	MONGO_DB,
+	PORT,
+	CLIENT,
+	mongoConnectionString
+}
