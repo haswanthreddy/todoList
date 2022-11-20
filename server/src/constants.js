@@ -1,4 +1,5 @@
-require('dotenv').config()
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
 const {
 	ATLAS_USER,
@@ -6,7 +7,11 @@ const {
 	ATLAS_CLUSTER,
 	MONGO_DB,
 	PORT = 3000,
-	CLIENT
+	CLIENT,
+	CLIENT_ID,
+	CLIENT_SECRET,
+	SECRET_KEY_1,
+	SECRET_KEY_2,
 } = process.env;
 
 const mongoConnectionString = `mongodb+srv://${ATLAS_USER}:${ATLAS_PASSWORD}@${ATLAS_CLUSTER}/${MONGO_DB}?retryWrites=true`;
@@ -18,5 +23,9 @@ module.exports = {
 	MONGO_DB,
 	PORT,
 	CLIENT,
-	mongoConnectionString
-}
+	mongoConnectionString,
+	CLIENT_ID,
+	CLIENT_SECRET,
+	SECRET_KEY_1,
+	SECRET_KEY_2,
+};
